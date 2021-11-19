@@ -5,7 +5,7 @@ const User = db.profiles;
 
 // create a user
 const createUser = async (req, res) => {
-
+  console.log(req.body);
   let info = {
     email: req.body.email,
     password: req.body.password,
@@ -18,10 +18,9 @@ const createUser = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
   try {
-      await User.create(info);
-      res
-        .status(200)
-        .send({ status: "User Created Successfully" });
+    await User.create(info);
+    // res.status(200).send({ status: "User Created Successfully" });
+    res.redirect("/");
   } catch (error) {
     console.error(error.message);
     res.status(500).send("User already exists!!");
@@ -41,12 +40,12 @@ const loginUser = async (req, res) => {
         success: false,
         error: "Please try to login with correct Credentials",
       });
-    }
-    else {
+    } else {
       if (req.body.password == user.password) {
-        res.json(user);
-      }
-      else {
+        // res.json(user);
+        // res.status(200).render("welcome");
+        res.redirect("/welcome");
+      } else {
         return res.status(401).json({
           success: false,
           error: "Please try to login with correct Credentials",
@@ -61,5 +60,5 @@ const loginUser = async (req, res) => {
 
 module.exports = {
   createUser,
-  loginUser
+  loginUser,
 };
