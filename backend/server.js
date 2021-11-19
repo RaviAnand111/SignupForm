@@ -14,13 +14,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const router = require("./routes/userRouter.js");
-app.use("/newsapi/", router);
+app.use("/user/", router);
 
 app.get("/", (req, res) => {
   res.json({ message: "hello world" });
 });
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 5700;
 
 app.listen(PORT, () => {
   console.log(`Server is running in port ${PORT}`);
