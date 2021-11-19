@@ -1,12 +1,11 @@
 const userController = require("../controllers/userController.js");
-const { body, validationResult } = require("express-validator");
-const checkLogin = require("../middleware/checkLogin");
+const { body } = require("express-validator");
 
 const router = require("express").Router();
 
-// create user no login required
+// Route 1: SignUp a new User
 router.post(
-  "/createuser",
+  "/signup",
   [
     body("email", "Enter a valid email").isEmail(),
     body("password", "Choose a password of minimum 8 characters").isLength({
@@ -19,19 +18,14 @@ router.post(
   userController.createUser
 );
 
-// authenticate a user no login required
+// Router 2: LogIn an existing user
 router.post(
   "/login",
   [
     body("email", "Enter a valid email").isEmail(),
     body("password", "Password cannot be blank").exists(),
-    // body('password', 'Choose a password of minimum 8 characters').isLength({ min: 8}),
-    // body('password', 'Choose a password of maximum 10 characters').isLength({ max: 20})
   ],
   userController.loginUser
 );
-
-// geting user by login id password
-router.post("/getuser", checkLogin, userController.getUser);
 
 module.exports = router;
